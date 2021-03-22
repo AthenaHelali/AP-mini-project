@@ -1,10 +1,15 @@
 public class Player {
     public role PlayerRole;
-    public boolean isAlive;
+    public boolean isAlive=true;
     public String PlayerName;
-    public boolean isSilence;
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public boolean isSilence=false;
     public boolean isKilledToNight;
-    public int votee;
+    public int vote;
 
 
     public Player(role playerRoll,String PlayerName) {
@@ -13,10 +18,32 @@ public class Player {
 
     }
     public void setVote(){
-        votee++;
+        vote++;
     }
+    public int getVote(){return vote;}
+
+    public role getPlayerRole() {
+        return PlayerRole;
+    }
+
+    public boolean getIsAlive() {
+        return isAlive;
+    }
+
+    public String getPlayerName() {
+        return PlayerName;
+    }
+
+    public boolean getIsSilence() {
+        return isSilence;
+    }
+
+    public boolean isKilledToNight() {
+        return isKilledToNight;
+    }
+
     public void resetVote(){
-        votee=0;
+        vote=0;
     }
 
 }

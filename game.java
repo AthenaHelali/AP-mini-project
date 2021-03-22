@@ -1,22 +1,34 @@
 import java.util.Scanner;
 
 public class game {
+
     public int Day = 0;
     public int night = 0;
     public static int numOfPlayers = 0;
     public static Player[] PlayerList = new Player[20];
+    public static boolean gameEnd = false;
 
     public static boolean startGame;
 
-    public static String getInput(String input) {
+    public static String getPlayersName(String input) {
         Scanner scanner = new Scanner(System.in);
         String[] SplitTest = new String[21];
         SplitTest = input.split(" ");
-        if (SplitTest[0].equals("create_game"))
+        if (SplitTest[0].equals("create_game\n"))
             return input;
         else {
             System.out.println("no game created\n");
-            return getInput(scanner.nextLine());
+            return getPlayersName(scanner.nextLine());
+        }
+    }
+
+    public static void getEntry(String Entry) {
+        Scanner scanner = new Scanner(System.in);
+        String temp = scanner.nextLine();
+        if (temp.equals(Entry))
+            return;
+        else {
+            getEntry(Entry);
         }
     }
 
@@ -28,8 +40,8 @@ public class game {
         return false;
     }
 
-    public static Player[] getAlivePlayers(Player[] PlayerList) {
-        Player[] temp = new Player[countAlivePlayers(PlayerList)];
+    public static Player[] getAlivePlayers() {
+        Player[] temp = new Player[countAlivePlayers()];
         int j = 0;
         for (int i = 0; i < PlayerList.length; i++) {
             if (PlayerList[i].isAlive) {
@@ -38,22 +50,13 @@ public class game {
             }
         }
         return temp;
-    }public static Player[] getAliveVillagers(Player[] PlayerList) {
-        Player[] temp = new Player[countAlivePlayers(PlayerList)];
-        int j = 0;
-        for (int i = 0; i < PlayerList.length; i++) {
-            if (PlayerList[i].isAlive&(PlayerList[i].PlayerRole==role.Villager)) {
-                temp[j] = PlayerList[i];
-                j++;
-            }
-        }
-        return temp;
     }
-public static Player[] getAliveMafia(Player[] PlayerList) {
-        Player[] temp = new Player[countAlivePlayers(PlayerList)];
+
+    public static Player[] getAliveVillagers() {
+        Player[] temp = new Player[countAlivePlayers()];
         int j = 0;
         for (int i = 0; i < PlayerList.length; i++) {
-            if (PlayerList[i].isAlive&(PlayerList[i].PlayerRole==role.Mafia)) {
+            if (game.PlayerList[i].isAlive & (game.PlayerList[i].PlayerRole == role.Villager)) {
                 temp[j] = PlayerList[i];
                 j++;
             }
@@ -61,10 +64,22 @@ public static Player[] getAliveMafia(Player[] PlayerList) {
         return temp;
     }
 
-    public static int countAlivePlayers(Player[] PlayerList) {
+    public static Player[] getAliveMafia() {
+        Player[] temp = new Player[countAlivePlayers()];
+        int j = 0;
+        for (int i = 0; i < game.PlayerList.length; i++) {
+            if (PlayerList[i].isAlive & (PlayerList[i].PlayerRole == role.Mafia)) {
+                temp[j] = PlayerList[i];
+                j++;
+            }
+        }
+        return temp;
+    }
+
+    public static int countAlivePlayers() {
         int counter = 0;
-        for (int i = 0; i < PlayerList.length; i++) {
-            if (PlayerList[i].isAlive)
+        for (int i = 0; i < game.PlayerList.length; i++) {
+            if (game.PlayerList[i].isAlive)
                 counter++;
         }
         return counter;
@@ -104,10 +119,10 @@ public static Player[] getAliveMafia(Player[] PlayerList) {
         return true;
     }
 
-    public static Player FindPlayer(String name, Player[] Playerlist) {
-        for (int i = 0; i < Playerlist.length; i++) {
-            if (Playerlist[i].PlayerName.equals(name))
-                return Playerlist[i];
+    public static Player FindPlayer(String name) {
+        for (int i = 0; i < game.PlayerList.length; i++) {
+            if (game.PlayerList[i].PlayerName.equals(name))
+                return game.PlayerList[i];
         }
         return null;
     }
@@ -116,18 +131,15 @@ public static Player[] getAliveMafia(Player[] PlayerList) {
         Scanner inp = new Scanner(System.in);
         game a = new game();
         String input = inp.nextLine();
-        String[] SplitInput = getInput(input).split(" ");
+        String[] SplitInput = getPlayersName(input).split(" ");
         //assign role
-        for (int i = 0; i < SplitInput.length - 1; i++) {
+        while (!inp.nextLine().equals("start_game")) {
             String[] temp = inp.nextLine().split(" ");
             if (isPlayer(temp[1], SplitInput)) {
                 if (makeRoll(temp[1], temp[2], PlayerList, numOfPlayers))
                     numOfPlayers++;
-                else i--;
-            } else {
+            } else
                 System.out.println("user not found\n");
-                i--;
-            }
 
         }
 
