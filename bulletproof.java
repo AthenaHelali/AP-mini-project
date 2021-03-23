@@ -1,6 +1,7 @@
 public class bulletproof extends Player{
-    public boolean nightLife=true;
+    public static boolean AlreadyKilled=false;
     public bulletproof(String name){
         super(role.Villager,name);
     }
 }
+

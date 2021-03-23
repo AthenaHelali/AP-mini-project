@@ -6,7 +6,12 @@ public class Day {
 
     public Day() {
         System.out.println("Day" + (++DayNumber) + "\n");
-        this.voting();
+        this.WhatHappendNight();
+        if(!game.gameEnd) {
+            this.voting();
+        }
+        silencer.silenced.isSilence = false;
+        silencer.silenced = null;
     }
 
     public boolean checkVotee(String name) {
@@ -23,7 +28,13 @@ public class Day {
     }
 
     public void voting() {
-        while (!scanner.nextLine().equals("end_vote")) {
+        String input = scanner.nextLine();
+        while (!input.equals("end_vote")) {
+            if (input.equals("get_game_state")) {
+                System.out.println("Mafia = " + game.getAliveMafia() + "\n");
+                System.out.println("Villager = " + game.getAliveVillagers() + "\n");
+                continue;
+            }
             String[] temp = scanner.nextLine().split(" ");
             if (checkVotee(temp[0])) {
                 Player a = game.FindPlayer(temp[1]);
@@ -56,7 +67,7 @@ public class Day {
         }
         if (repeat < 2) {
             if (game.FindPlayer(mostVotedPlayer).getClass().getSimpleName().equals("Joker")) {
-                System.out.println("Joker won!\n");
+                game.winner = "Joker";
                 game.gameEnd = true;
             } else {
                 game.FindPlayer(mostVotedPlayer).setAlive(false);
@@ -65,9 +76,25 @@ public class Day {
         } else {
             System.out.println("nobody died\n");
         }
-        for (int i=0;i<game.getAlivePlayers().length;i++){
+        for (int i = 0; i < game.getAlivePlayers().length; i++) {
             game.getAlivePlayers()[i].resetVote();
 
+        }
+        input = scanner.nextLine();
+    }
+
+    public void WhatHappendNight() {
+        if (night.mafiaTriedToKill != null) {
+            System.out.println("mafia tried to kill " + night.mafiaTriedToKill.getPlayerName() + "\n");
+            night.mafiaTriedToKill = null;
+        }
+        if (night.MafiaKilled != null) {
+            System.out.println(night.MafiaKilled.getPlayerName() + " was killed\n");
+            night.MafiaKilled = null;
+        }
+        if (silencer.silenced != null) {
+            System.out.println("Silenced " + silencer.silenced.getPlayerName() + "\n");
+            silencer.setCalledBefore(false);
         }
     }
 

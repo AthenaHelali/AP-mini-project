@@ -1,4 +1,5 @@
 public class detective extends Player{
+    public static boolean AlreadyAsk=false;
     public detective(String name){
         super(role.Villager,name);
     }

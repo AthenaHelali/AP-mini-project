@@ -7,6 +7,7 @@ public class game {
     public static int numOfPlayers = 0;
     public static Player[] PlayerList = new Player[20];
     public static boolean gameEnd = false;
+    public static String winner;
 
     public static boolean startGame;
 
