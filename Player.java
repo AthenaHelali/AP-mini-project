@@ -14,7 +14,7 @@ public class Player {
     }
 
     public void setAlive(boolean alive) {
-        isAlive = alive;
+        this.isAlive = alive;
     }
 
     public void setVote() {
@@ -41,12 +41,8 @@ public class Player {
         return isSilence;
     }
 
-    public boolean isKilledToNight() {
-        return isKilledToNight;
-    }
-
     public void resetVote() {
-        vote = 0;
+        this.vote = 0;
     }
 
     public Player getNightVote() {

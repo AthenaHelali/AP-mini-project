@@ -7,11 +7,15 @@ public class Day {
     public Day() {
         System.out.println("Day" + (++DayNumber) + "\n");
         this.WhatHappendNight();
-        if(!game.gameEnd) {
-            this.voting();
+        this.voting();
+        if (silencer.silenced != null) {
+            silencer.silenced.isSilence = false;
+            silencer.silenced=null;
         }
-        silencer.silenced.isSilence = false;
-        silencer.silenced = null;
+        game.EndGame();
+        if (!game.EndGame) {
+            night a = new night();
+        }
     }
 
     public boolean checkVotee(String name) {
@@ -24,6 +28,11 @@ public class Day {
             System.out.println("voter is silenced\n");
             return false;
         }
+        if(!temp.getIsAlive()){
+            System.out.println("voter is dead\n");
+            return false;
+        }
+
         return true;
     }
 
@@ -31,23 +40,39 @@ public class Day {
         String input = scanner.nextLine();
         while (!input.equals("end_vote")) {
             if (input.equals("get_game_state")) {
-                System.out.println("Mafia = " + game.getAliveMafia() + "\n");
-                System.out.println("Villager = " + game.getAliveVillagers() + "\n");
+                System.out.println("Mafia = " + game.getAliveMafia().length + "\n");
+                System.out.println("Villager = " + game.getAliveVillagers().length + "\n");
+                input=scanner.nextLine();
                 continue;
             }
-            String[] temp = scanner.nextLine().split(" ");
-            if (checkVotee(temp[0])) {
+            if(input.equals("start_game")){
+                System.out.println("game has already started");
+                input=scanner.nextLine();
+                continue;
+            }
+            String[] temp = input.split(" ");
+            if(!checkVotee(temp[0])){
+                input=scanner.nextLine();
+                continue;
+            }
+            if (temp.length > 1) {
                 Player a = game.FindPlayer(temp[1]);
                 if (a == null) {
                     System.out.println("user not found\n");
+                    input = scanner.nextLine();
                     continue;
                 } else if (!a.getIsAlive()) {
                     System.out.println("votee already dead\n");
+                    input = scanner.nextLine();
                     continue;
                 } else {
                     a.setVote();
                 }
             }
+            else{
+                System.out.println("user not found\n");
+            }
+            input = scanner.nextLine();
         }
 
         String mostVotedPlayer = null;
@@ -67,20 +92,18 @@ public class Day {
         }
         if (repeat < 2) {
             if (game.FindPlayer(mostVotedPlayer).getClass().getSimpleName().equals("Joker")) {
-                game.winner = "Joker";
-                game.gameEnd = true;
+                game.winner = "Joker won!";
+                game.EndGame = true;
             } else {
                 game.FindPlayer(mostVotedPlayer).setAlive(false);
-                System.out.println(game.FindPlayer(mostVotedPlayer).getPlayerName() + "died\n");
+                System.out.println(game.FindPlayer(mostVotedPlayer).getPlayerName() + " died\n");
             }
         } else {
             System.out.println("nobody died\n");
         }
         for (int i = 0; i < game.getAlivePlayers().length; i++) {
             game.getAlivePlayers()[i].resetVote();
-
         }
-        input = scanner.nextLine();
     }
 
     public void WhatHappendNight() {
