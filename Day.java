@@ -117,7 +117,6 @@ public class Day {
         }
         if (silencer.silenced != null) {
             System.out.println("Silenced " + silencer.silenced.getPlayerName() + "\n");
-            silencer.setCalledBefore(false);
         }
     }
 

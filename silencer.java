@@ -11,8 +11,4 @@ public class silencer extends Player{
     public static void setCalledBefore(boolean calledBefore) {
         isCalledBefore = calledBefore;
     }
-
-    public boolean isCalledBefore() {
-        return isCalledBefore;
-    }
 }

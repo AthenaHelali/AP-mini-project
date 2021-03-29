@@ -1,9 +1,6 @@
 import java.util.Scanner;
 
 public class game {
-
-    public int Day = 0;
-    public int night = 0;
     public static int numOfPlayers = 0;
     public static Player[] PlayerList;
     public static boolean EndGame = false;
@@ -142,7 +139,7 @@ public class game {
             EndGame = true;
             winner = "Villagers won!";
         }
-        if (getAliveVillagers().length < getAliveMafia().length) {
+        if (getAliveVillagers().length <= getAliveMafia().length) {
             EndGame = true;
             winner = "Mafia won!";
         }
@@ -177,7 +174,7 @@ public class game {
             String[] temp = getEntry.split(" ");
             if (temp.length < 3) {
                 System.out.println("user not found\n");
-                input=inp.nextLine();
+                getEntry=inp.nextLine();
                 continue;
             } else {
                 if (isPlayer(temp[1], SplitInput) & (game.FindPlayer(temp[1]) == null)) {

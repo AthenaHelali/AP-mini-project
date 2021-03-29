@@ -52,6 +52,7 @@ public class night {
             }
             if(inp.equals("start_game")){
                 System.out.println("game has already started\n");
+                inp=scanner.nextLine();
                 continue;
             }
 
@@ -111,7 +112,7 @@ public class night {
                                 a.setNightVote(b);
                         } else {
                             if (checkB(b)) {
-                                silencer.isCalledBefore = true;
+                                silencer.setCalledBefore(true);
                                 silencer.setSilence(b);
                                 silencer.silenced=b;
                             }
@@ -170,17 +171,14 @@ public class night {
             if (MafiaKilled.getClass().getSimpleName().equals("bulletproof")) {
                 if (!bulletproof.AlreadyKilled) {
                     bulletproof.AlreadyKilled = true;
+                    MafiaKilled.setAlive(true);
+                    MafiaKilled.resetVote();
                     MafiaKilled = null;
                 }
             }
         }
-        if (MafiaKilled != null) {
-            if (MafiaKilled.getClass().getSimpleName().equals("Joker")) {
-                game.EndGame = true;
-                game.winner = "Joker won!";
-            }
-        }
         doctor.SavedByDoctor = null;
+        silencer.isCalledBefore=false;
     }
 
     public boolean checkB(Player b) {
