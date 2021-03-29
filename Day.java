@@ -24,12 +24,12 @@ public class Day {
             System.out.println("user not found\n");
             return false;
         }
-        if (temp.getIsSilence()) {
-            System.out.println("voter is silenced\n");
-            return false;
-        }
         if(!temp.getIsAlive()){
             System.out.println("voter is dead\n");
+            return false;
+        }
+        if (temp.getIsSilence()) {
+            System.out.println("voter is silenced\n");
             return false;
         }
 
@@ -118,6 +118,9 @@ public class Day {
         if (silencer.silenced != null) {
             System.out.println("Silenced " + silencer.silenced.getPlayerName() + "\n");
         }
+    }
+    public void SwapCharacter(){
+
     }
 
 }

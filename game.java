@@ -30,9 +30,9 @@ public class game {
     public static Player[] getAlivePlayers() {
         Player[] temp = new Player[countAlivePlayers()];
         int j = 0;
-        for (int i = 0; i < PlayerList.length; i++) {
-            if (PlayerList[i].isAlive) {
-                temp[j] = PlayerList[i];
+        for (Player player : PlayerList) {
+            if (player.isAlive) {
+                temp[j] = player;
                 j++;
             }
         }
@@ -63,15 +63,15 @@ public class game {
     public static Player[] getAliveMafia() {
         Player[] temp;
         int countAliveMafia = 0;
-        for (int j = 0; j < game.PlayerList.length; j++) {
-            if (PlayerList[j].getPlayerRole() == role.Mafia & PlayerList[j].isAlive)
+        for (Player player : game.PlayerList) {
+            if (player.getPlayerRole() == role.Mafia & player.isAlive)
                 countAliveMafia++;
         }
         temp = new Player[countAliveMafia];
         int k = 0;
-        for (int i = 0; i < game.PlayerList.length; i++) {
-            if (PlayerList[i].isAlive & (PlayerList[i].PlayerRole == role.Mafia)) {
-                temp[k] = PlayerList[i];
+        for (Player player : game.PlayerList) {
+            if (player.isAlive & (player.PlayerRole == role.Mafia)) {
+                temp[k] = player;
                 k++;
             }
         }
@@ -90,31 +90,15 @@ public class game {
     //make players by their role
     public static boolean makeRole(String name, String role, Player[] PlayerList, int i) {
         switch (role) {
-            case "Joker":
-                PlayerList[i] = new Joker(name);
-                break;
-            case "villager":
-                PlayerList[i] = new villager(name);
-                break;
-            case "detective":
-                PlayerList[i] = new detective(name);
-                break;
-            case "doctor":
-                PlayerList[i] = new doctor(name);
-                break;
-            case "bulletproof":
-                PlayerList[i] = new bulletproof(name);
-                break;
-            case "mafia":
-                PlayerList[i] = new mafia(name);
-                break;
-            case "godfather":
-                PlayerList[i] = new godfather(name);
-                break;
-            case "silencer":
-                PlayerList[i] = new silencer(name);
-                break;
-            default: {
+            case "Joker" -> PlayerList[i] = new Joker(name);
+            case "villager" -> PlayerList[i] = new villager(name);
+            case "detective" -> PlayerList[i] = new detective(name);
+            case "doctor" -> PlayerList[i] = new doctor(name);
+            case "bulletproof" -> PlayerList[i] = new bulletproof(name);
+            case "mafia" -> PlayerList[i] = new mafia(name);
+            case "godfather" -> PlayerList[i] = new godfather(name);
+            case "silencer" -> PlayerList[i] = new silencer(name);
+            default -> {
                 System.out.println("role not found\n");
                 return false;
             }
@@ -135,7 +119,7 @@ public class game {
 
     //check if the game is ended
     public static void EndGame() {
-        if (getAliveMafia()[0] == null) {
+        if (getAliveMafia().length == 0) {
             EndGame = true;
             winner = "Villagers won!";
         }
@@ -148,8 +132,8 @@ public class game {
     //check start
     public static boolean checkStart(String getEntry) {
         boolean check = true;
-        for (int i = 0; i < PlayerList.length; i++) {
-            if (PlayerList[i] == null)
+        for (Player player : PlayerList) {
+            if (player == null)
                 check = false;
         }
         if (getEntry.equals("start_game")) {
@@ -173,27 +157,34 @@ public class game {
         while (!checkStart(getEntry)) {
             String[] temp = getEntry.split(" ");
             if (temp.length < 3) {
-                System.out.println("user not found\n");
-                getEntry=inp.nextLine();
+                if (temp[0].equals("start_game")) {
+                    getEntry = inp.nextLine();
+                    continue;
+                } else {
+                    System.out.println("user not found\n");
+                    getEntry = inp.nextLine();
+                    continue;
+                }
+            } else if (!temp[0].equals("assign_role")) {
+                System.out.println("invalid input\n");
+                getEntry = inp.nextLine();
                 continue;
-            } else {
-                if (isPlayer(temp[1], SplitInput) & (game.FindPlayer(temp[1]) == null)) {
+            } else if (game.FindPlayer(temp[1]) == null) {
+                if (isPlayer(temp[1], SplitInput)) {
                     if (makeRole(temp[1], temp[2], PlayerList, numOfPlayers))
                         numOfPlayers++;
                 } else
                     System.out.println("user not found\n");
-
-            }
+            } else System.out.println("role already assigned");
             getEntry = inp.nextLine();
         }
-        for (int i = 0; i < PlayerList.length; i++) {
-            System.out.println(PlayerList[i].getPlayerName() + " : " + PlayerList[i].getClass().getSimpleName() + "\n");
+        for (Player player : PlayerList) {
+            System.out.println(player.getPlayerName() + " : " + player.getClass().getSimpleName() + "\n");
         }
         System.out.println("Ready? Set! Go.\n");
 
         while (!EndGame) {
             Day temp = new Day();
-
         }
         System.out.println(winner);
     }

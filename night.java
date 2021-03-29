@@ -50,12 +50,11 @@ public class night {
                 inp = scanner.nextLine();
                 continue;
             }
-            if(inp.equals("start_game")){
+            if (inp.equals("start_game")) {
                 System.out.println("game has already started\n");
-                inp=scanner.nextLine();
+                inp = scanner.nextLine();
                 continue;
             }
-
             String[] input = inp.split(" ");
             if (input.length < 2) {
                 System.out.println("user not found\n");
@@ -66,7 +65,7 @@ public class night {
             Player b = game.FindPlayer(input[1]);
 
             if (a == null | b == null) {
-                System.out.println("user not found\n");
+                System.out.println("user not joined\n");
                 inp = scanner.nextLine();
                 continue;
             }
@@ -84,12 +83,14 @@ public class night {
                         System.out.println("user can not wake up during night\n");
                         break;
                     case "detective":
-                        if (!checkB(b)) {
+                        if (!b.getIsAlive()) {
                             System.out.println("suspect is dead\n");
                         } else if (detective.AlreadyAsk) {
                             System.out.println("detective has already asked\n");
-                        } else
+                        } else {
                             detective.isMafia(b);
+                            detective.AlreadyAsk = true;
+                        }
                         break;
                     case "doctor":
                         if (checkB(b))
@@ -114,7 +115,7 @@ public class night {
                             if (checkB(b)) {
                                 silencer.setCalledBefore(true);
                                 silencer.setSilence(b);
-                                silencer.silenced=b;
+                                silencer.silenced = b;
                             }
                         }
                         break;
@@ -129,15 +130,14 @@ public class night {
 
 
         for (int i = 0; i < game.getAliveMafia().length; i++) {
-            if(game.getAliveMafia()[i].getNightVote()!=null)
-            game.getAliveMafia()[i].getNightVote().setVote();
+            if (game.getAliveMafia()[i].getNightVote() != null)
+                game.getAliveMafia()[i].getNightVote().setVote();
         }
         int vote = 0;
         int repeat = 0;
         Player a = null;
         for (int j = 0; j < game.getAlivePlayers().length; j++) {
             if (game.getAlivePlayers()[j].getVote() > vote) {
-                a = game.getAlivePlayers()[j];
                 vote = game.getAlivePlayers()[j].getVote();
             }
         }
@@ -174,11 +174,13 @@ public class night {
                     MafiaKilled.setAlive(true);
                     MafiaKilled.resetVote();
                     MafiaKilled = null;
+                    mafiaTriedToKill = null;
                 }
             }
         }
         doctor.SavedByDoctor = null;
-        silencer.isCalledBefore=false;
+        silencer.isCalledBefore = false;
+        detective.AlreadyAsk=false;
     }
 
     public boolean checkB(Player b) {
