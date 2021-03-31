@@ -4,7 +4,7 @@ public class night {
     Scanner scanner = new Scanner(System.in);
     public static int nightNumber = 0;
     public static Player MafiaKilled;
-    public static Player mafiaTriedToKill;
+    public static Player[] mafiaTriedToKill;
 
     public night() {
         System.out.println("night" + (++nightNumber) + "\n");
@@ -142,26 +142,32 @@ public class night {
             }
         }
 
-        Player[] equalvote = new Player[game.getAlivePlayers().length];
+        Player[] equalVote = new Player[game.getAlivePlayers().length];
         int n = 0;
         for (int k = 0; k < game.getAlivePlayers().length; k++) {
             if (game.getAlivePlayers()[k].getVote() == vote) {
-                equalvote[n] = game.getAlivePlayers()[k];
+                equalVote[n] = game.getAlivePlayers()[k];
                 repeat++;
                 n++;
-
             }
         }
+        mafiaTriedToKill=new Player[repeat];
+        for (int i=0;i<repeat;i++){
+           mafiaTriedToKill[i]=equalVote[i];
+        }
         if (repeat == 2) {
-            if (equalvote[0].equals(doctor.SavedByDoctor))
-                MafiaKilled = equalvote[1];
-            else if (equalvote[1].equals(doctor.SavedByDoctor))
-                MafiaKilled = equalvote[1];
+            if (equalVote[0].equals(doctor.SavedByDoctor)) {
+                MafiaKilled = equalVote[1];
+                MafiaKilled.setAlive(false);
+            }
+            else if (equalVote[1].equals(doctor.SavedByDoctor)) {
+                MafiaKilled = equalVote[0];
+                MafiaKilled.setAlive(false);
+            }
         }
         if (repeat == 1) {
-            mafiaTriedToKill = equalvote[0];
-            if (!mafiaTriedToKill.equals(doctor.SavedByDoctor)) {
-                MafiaKilled = mafiaTriedToKill;
+            if (!mafiaTriedToKill[0].equals(doctor.SavedByDoctor)) {
+                MafiaKilled = mafiaTriedToKill[0];
                 MafiaKilled.setAlive(false);
             }
         }
@@ -174,7 +180,6 @@ public class night {
                     MafiaKilled.setAlive(true);
                     MafiaKilled.resetVote();
                     MafiaKilled = null;
-                    mafiaTriedToKill = null;
                 }
             }
         }

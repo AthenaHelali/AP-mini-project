@@ -107,9 +107,12 @@ public class Day {
     }
 
     public void WhatHappendNight() {
-        if (night.mafiaTriedToKill != null) {
-            System.out.println("mafia tried to kill " + night.mafiaTriedToKill.getPlayerName() + "\n");
-            night.mafiaTriedToKill = null;
+        if (night.mafiaTriedToKill!=null) {
+            for (int i=0;i<night.mafiaTriedToKill.length;i++) {
+                if(!night.mafiaTriedToKill[i].getClass().getSimpleName().equals("bulletproof"))
+                System.out.println("mafia tried to kill " + night.mafiaTriedToKill[i].getPlayerName() + "\n");
+            }
+            night.mafiaTriedToKill =null;
         }
         if (night.MafiaKilled != null) {
             System.out.println(night.MafiaKilled.getPlayerName() + " was killed\n");
@@ -119,8 +122,4 @@ public class Day {
             System.out.println("Silenced " + silencer.silenced.getPlayerName() + "\n");
         }
     }
-    public void SwapCharacter(){
-
-    }
-
 }
