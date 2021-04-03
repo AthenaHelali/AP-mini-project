@@ -112,8 +112,8 @@ public class Day {
                 if(!night.mafiaTriedToKill[i].getClass().getSimpleName().equals("bulletproof"))
                 System.out.println("mafia tried to kill " + night.mafiaTriedToKill[i].getPlayerName() + "\n");
             }
-            night.mafiaTriedToKill =null;
         }
+        night.mafiaTriedToKill=null;
         if (night.MafiaKilled != null) {
             System.out.println(night.MafiaKilled.getPlayerName() + " was killed\n");
             night.MafiaKilled = null;

@@ -183,6 +183,7 @@ public class night {
                 }
             }
         }
+        ///reset Players
         doctor.SavedByDoctor = null;
         silencer.isCalledBefore = false;
         detective.AlreadyAsk=false;

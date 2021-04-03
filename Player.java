@@ -4,7 +4,6 @@ public class Player {
     public String PlayerName;
     public Player nightVote;
     public boolean isSilence = false;
-    public boolean isKilledToNight;
     public int vote;
 
     public Player(role playerRoll, String PlayerName) {
