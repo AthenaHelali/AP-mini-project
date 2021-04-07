@@ -5,7 +5,7 @@ public class Day {
     public static int DayNumber = 0;
 
     public Day() {
-        System.out.println("Day" + (++DayNumber) + "\n");
+        System.out.println("Day" + (++DayNumber));
         this.WhatHappendNight();
         this.voting();
         if (silencer.silenced != null) {
@@ -21,15 +21,15 @@ public class Day {
     public boolean checkVotee(String name) {
         Player temp = game.FindPlayer(name);
         if (temp == null) {
-            System.out.println("user not found\n");
+            System.out.println("user not found");
             return false;
         }
         if(!temp.getIsAlive()){
-            System.out.println("voter is dead\n");
+            System.out.println("voter is dead");
             return false;
         }
         if (temp.getIsSilence()) {
-            System.out.println("voter is silenced\n");
+            System.out.println("voter is silenced");
             return false;
         }
 
@@ -40,8 +40,8 @@ public class Day {
         String input = scanner.nextLine();
         while (!input.equals("end_vote")) {
             if (input.equals("get_game_state")) {
-                System.out.println("Mafia = " + game.getAliveMafia().length + "\n");
-                System.out.println("Villager = " + game.getAliveVillagers().length + "\n");
+                System.out.println("Mafia = " + game.getAliveMafia().length);
+                System.out.println("Villager = " + game.getAliveVillagers().length);
                 input=scanner.nextLine();
                 continue;
             }
@@ -58,11 +58,11 @@ public class Day {
             if (temp.length > 1) {
                 Player a = game.FindPlayer(temp[1]);
                 if (a == null) {
-                    System.out.println("user not found\n");
+                    System.out.println("user not found");
                     input = scanner.nextLine();
                     continue;
                 } else if (!a.getIsAlive()) {
-                    System.out.println("votee already dead\n");
+                    System.out.println("votee already dead");
                     input = scanner.nextLine();
                     continue;
                 } else {
@@ -70,7 +70,7 @@ public class Day {
                 }
             }
             else{
-                System.out.println("user not found\n");
+                System.out.println("user not found");
             }
             input = scanner.nextLine();
         }
@@ -96,10 +96,10 @@ public class Day {
                 game.EndGame = true;
             } else {
                 game.FindPlayer(mostVotedPlayer).setAlive(false);
-                System.out.println(game.FindPlayer(mostVotedPlayer).getPlayerName() + " died\n");
+                System.out.println(game.FindPlayer(mostVotedPlayer).getPlayerName() + " died");
             }
         } else {
-            System.out.println("nobody died\n");
+            System.out.println("nobody died");
         }
         for (int i = 0; i < game.getAlivePlayers().length; i++) {
             game.getAlivePlayers()[i].resetVote();
@@ -110,16 +110,16 @@ public class Day {
         if (night.mafiaTriedToKill!=null) {
             for (int i=0;i<night.mafiaTriedToKill.length;i++) {
                 if(!night.mafiaTriedToKill[i].getClass().getSimpleName().equals("bulletproof"))
-                System.out.println("mafia tried to kill " + night.mafiaTriedToKill[i].getPlayerName() + "\n");
+                System.out.println("mafia tried to kill " + night.mafiaTriedToKill[i].getPlayerName());
             }
         }
         night.mafiaTriedToKill=null;
         if (night.MafiaKilled != null) {
-            System.out.println(night.MafiaKilled.getPlayerName() + " was killed\n");
+            System.out.println(night.MafiaKilled.getPlayerName() + " was killed");
             night.MafiaKilled = null;
         }
         if (silencer.silenced != null) {
-            System.out.println("Silenced " + silencer.silenced.getPlayerName() + "\n");
+            System.out.println("Silenced " + silencer.silenced.getPlayerName());
         }
     }
 }

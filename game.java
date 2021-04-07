@@ -12,7 +12,7 @@ public class game {
         if (SplitTest[0].equals("create_game"))
             return input;
         else {
-            System.out.println("no game created\n");
+            System.out.println("no game created");
             return getPlayersName(scanner.nextLine());
         }
     }
@@ -161,12 +161,12 @@ public class game {
                     getEntry = inp.nextLine();
                     continue;
                 } else {
-                    System.out.println("user not found\n");
+                    System.out.println("user not found");
                     getEntry = inp.nextLine();
                     continue;
                 }
             } else if (!temp[0].equals("assign_role")) {
-                System.out.println("invalid input\n");
+                System.out.println("invalid input");
                 getEntry = inp.nextLine();
                 continue;
             } else if (game.FindPlayer(temp[1]) == null) {
@@ -174,14 +174,14 @@ public class game {
                     if (makeRole(temp[1], temp[2], PlayerList, numOfPlayers))
                         numOfPlayers++;
                 } else
-                    System.out.println("user not found\n");
+                    System.out.println("user not found");
             } else System.out.println("role already assigned");
             getEntry = inp.nextLine();
         }
         for (Player player : PlayerList) {
-            System.out.println(player.getPlayerName() + " : " + player.getClass().getSimpleName() + "\n");
+            System.out.println(player.getPlayerName() + " : " + player.getClass().getSimpleName());
         }
-        System.out.println("Ready? Set! Go.\n");
+        System.out.println("Ready? Set! Go.");
 
         while (!EndGame) {
             Day temp = new Day();

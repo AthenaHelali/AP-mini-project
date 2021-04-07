@@ -7,7 +7,7 @@ public class night {
     public static Player[] mafiaTriedToKill;
 
     public night() {
-        System.out.println("night" + (++nightNumber) + "\n");
+        System.out.println("night" + (++nightNumber));
         nightPlayers();
         nightVoting();
         game.EndGame();
@@ -22,21 +22,21 @@ public class night {
                 case "villager":
                     break;
                 case "detective":
-                    System.out.println(game.getAlivePlayers()[i].getPlayerName() + ": " + game.getAlivePlayers()[i].getClass().getSimpleName() + "\n");
+                    System.out.println(game.getAlivePlayers()[i].getPlayerName() + ": " + game.getAlivePlayers()[i].getClass().getSimpleName());
                     break;
                 case "doctor":
-                    System.out.println(game.getAlivePlayers()[i].getPlayerName() + ": " + game.getAlivePlayers()[i].getClass().getSimpleName() + "\n");
+                    System.out.println(game.getAlivePlayers()[i].getPlayerName() + ": " + game.getAlivePlayers()[i].getClass().getSimpleName());
                     break;
                 case "bulletproof":
                     break;
                 case "mafia":
-                    System.out.println(game.getAlivePlayers()[i].getPlayerName() + ": " + game.getAlivePlayers()[i].getClass().getSimpleName() + "\n");
+                    System.out.println(game.getAlivePlayers()[i].getPlayerName() + ": " + game.getAlivePlayers()[i].getClass().getSimpleName());
                     break;
                 case "godfather":
-                    System.out.println(game.getAlivePlayers()[i].getPlayerName() + ": " + game.getAlivePlayers()[i].getClass().getSimpleName() + "\n");
+                    System.out.println(game.getAlivePlayers()[i].getPlayerName() + ": " + game.getAlivePlayers()[i].getClass().getSimpleName());
                     break;
                 case "silencer":
-                    System.out.println(game.getAlivePlayers()[i].getPlayerName() + ": " + game.getAlivePlayers()[i].getClass().getSimpleName() + "\n");
+                    System.out.println(game.getAlivePlayers()[i].getPlayerName() + ": " + game.getAlivePlayers()[i].getClass().getSimpleName());
             }
         }
     }
@@ -45,19 +45,19 @@ public class night {
         String inp = scanner.nextLine();
         while (!inp.equals("end_night")) {
             if (inp.equals("get_game_state")) {
-                System.out.println("Mafia = " + game.getAliveMafia().length + "\n");
-                System.out.println("Villager = " + game.getAliveVillagers().length + "\n");
+                System.out.println("Mafia = " + game.getAliveMafia().length);
+                System.out.println("Villager = " + game.getAliveVillagers().length);
                 inp = scanner.nextLine();
                 continue;
             }
             if (inp.equals("start_game")) {
-                System.out.println("game has already started\n");
+                System.out.println("game has already started");
                 inp = scanner.nextLine();
                 continue;
             }
             String[] input = inp.split(" ");
             if (input.length < 2) {
-                System.out.println("user not found\n");
+                System.out.println("user not found");
                 inp = scanner.nextLine();
                 continue;
             }
@@ -65,28 +65,28 @@ public class night {
             Player b = game.FindPlayer(input[1]);
 
             if (a == null | b == null) {
-                System.out.println("user not joined\n");
+                System.out.println("user not joined");
                 inp = scanner.nextLine();
                 continue;
             }
 
             if (!a.isAlive) {
-                System.out.println("user is dead\n");
+                System.out.println("user is dead");
                 inp = scanner.nextLine();
                 continue;
             } else {
                 switch (a.getClass().getSimpleName()) {
                     case "Joker":
-                        System.out.println("user can not wake up during night\n");
+                        System.out.println("user can not wake up during night");
                         break;
                     case "villager":
-                        System.out.println("user can not wake up during night\n");
+                        System.out.println("user can not wake up during night");
                         break;
                     case "detective":
                         if (!b.getIsAlive()) {
-                            System.out.println("suspect is dead\n");
+                            System.out.println("suspect is dead");
                         } else if (detective.AlreadyAsk) {
-                            System.out.println("detective has already asked\n");
+                            System.out.println("detective has already asked");
                         } else {
                             detective.isMafia(b);
                             detective.AlreadyAsk = true;
@@ -97,7 +97,7 @@ public class night {
                             doctor.SavedByDoctor = b;
                         break;
                     case "bulletproof":
-                        System.out.println("user can not wake up during night\n");
+                        System.out.println("user can not wake up during night");
                         break;
                     case "mafia":
                         if (checkB(b))
@@ -120,7 +120,7 @@ public class night {
                         }
                         break;
                     default: {
-                        System.out.println("role not found\n");
+                        System.out.println("role not found");
 
                     }
                 }
